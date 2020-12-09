@@ -1,6 +1,13 @@
 const express = require('express');
 const app = express();
 const port = 5000;
+const bodyParser = require('body-parser');
+const { User } = require('./models/User');
+
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 const mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://justinjeong:<password>@general.nbo0d.mongodb.net/<dbname>?retryWrites=true&w=majority', {
   useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false
@@ -15,6 +22,7 @@ mongoose.connect('mongodb+srv://justinjeong:<password>@general.nbo0d.mongodb.net
 app.get('/', (req, res) => {
   res.send('connected server-side app')
 })
+
 
 app.listen(port, () => {
   console.log(`server is listening on port ${port}`)

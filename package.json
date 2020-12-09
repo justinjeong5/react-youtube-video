@@ -1,0 +1,22 @@
+{
+  "name": "justinjeong5.github.io",
+  "version": "1.0.0",
+  "description": "justinjeong5.github.io",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/justinjeong5/justinjeong5.github.io.git"
+  },
+  "author": "shinywaterjeong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/justinjeong5/justinjeong5.github.io/issues"
+  },
+  "homepage": "https://github.com/justinjeong5/justinjeong5.github.io#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

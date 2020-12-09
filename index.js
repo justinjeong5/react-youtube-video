@@ -13,8 +13,8 @@ mongoose.connect('mongodb+srv://justinjeong:<password>@general.nbo0d.mongodb.net
   useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false
 }).then(() => {
   console.log('...database connected successfully!')
-}).catch((error) => {
-  console.error(error)
+}).catch((err) => {
+  console.error(err)
 })
 
 
@@ -23,6 +23,13 @@ app.get('/', (req, res) => {
   res.send('connected server-side app')
 })
 
+app.post('/register', (req, res) => {
+  const user = new User(req.body);
+  user.save((err, doc) => {
+    if (err) return res.json({ success: false, err })
+    return res.status(200).json({ success: true })
+  })
+})
 
 app.listen(port, () => {
   console.log(`server is listening on port ${port}`)

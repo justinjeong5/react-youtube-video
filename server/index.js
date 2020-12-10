@@ -22,7 +22,7 @@ mongoose.connect(config.mongoURI, {
 
 
 
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   res.send('connected server-side app')
 })
 

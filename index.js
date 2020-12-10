@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const config = require('./config/key')
 const { User } = require('./models/User');
-
+const { auth } = require('./middleware/auth')
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -66,7 +66,27 @@ app.post('/api/user/login', (req, res) => {
   })
 })
 
-app.post('')
+app.get('/api/user/auth', auth, (req, res) => {
+  const isAdmin = (role) => {
+    switch (role) {
+      case 0:
+        //0은 총괄 어드민
+        return true;
+      default:
+        return false;
+    }
+  }
+  res.status(200).json({
+    _id: req.user._id,
+    email: req.user.email,
+    name: req.user.name,
+    lastname: req.user.lastname,
+    image: req.user.image,
+    role: req.user.role,
+    isAdmin: isAdmin(req.user.role),
+    isAuth: true
+  })
+})
 
 
 app.listen(port, () => {

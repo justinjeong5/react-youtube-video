@@ -4,7 +4,8 @@
   "description": "justinjeong5.github.io",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./server/index.js"
+    "start": "nodemon server/index.js",
+    "dev": "concurrently \"npm run start\" \"npm run start --prefix client\""
   },
   "repository": {
     "type": "git",

@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
   res.send('connected server-side app')
 })
 
-app.post('/register', (req, res) => {
+app.post('/api/user/register', (req, res) => {
   const user = new User(req.body);
 
   user.save((err, doc) => {
@@ -35,7 +35,7 @@ app.post('/register', (req, res) => {
   })
 })
 
-app.post('/login', (req, res) => {
+app.post('/api/user/login', (req, res) => {
 
   User.findOne({ email: req.body.email }, (err, user) => {
     if (err) return res.json({ success: false, err })
@@ -65,6 +65,9 @@ app.post('/login', (req, res) => {
     })
   })
 })
+
+app.post('')
+
 
 app.listen(port, () => {
   console.log(`server is listening on port ${port}`)

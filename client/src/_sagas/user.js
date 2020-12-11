@@ -5,6 +5,7 @@ import {
   LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE,
   REGISTER_USER_REQUEST, REGISTER_USER_SUCCESS, REGISTER_USER_FAILURE,
   LOGOUT_USER_REQUEST, LOGOUT_USER_SUCCESS, LOGOUT_USER_FAILURE,
+  AUTHENTICATE_USER_REQUEST, AUTHENTICATE_USER_SUCCESS, AUTHENTICATE_USER_FAILURE,
 } from './types'
 
 function logInAPI(data) {
@@ -66,6 +67,26 @@ function* logout() {
   }
 }
 
+function authAPI() {
+  return axios.get('/api/user/auth')
+}
+
+function* auth() {
+  try {
+    const result = yield call(authAPI);
+    yield put({
+      type: AUTHENTICATE_USER_SUCCESS,
+      payload: result.data,
+    })
+  } catch (error) {
+    console.error(error)
+    yield put({
+      type: AUTHENTICATE_USER_FAILURE,
+      error: error.response.data,
+    })
+  }
+}
+
 function* watchLogin() {
   yield takeLatest(LOGIN_USER_REQUEST, logIn)
 }
@@ -78,10 +99,16 @@ function* watchLogout() {
   yield takeLatest(LOGOUT_USER_REQUEST, logout)
 }
 
+function* watchAuthUser() {
+  yield takeLatest(AUTHENTICATE_USER_REQUEST, auth)
+}
+
+
 export default function* userSaga() {
   yield all([
     fork(watchLogin),
     fork(watchRegister),
     fork(watchLogout),
+    fork(watchAuthUser),
   ])
 }

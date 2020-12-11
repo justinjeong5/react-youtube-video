@@ -2,6 +2,7 @@ import {
   LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE,
   REGISTER_USER_REQUEST, REGISTER_USER_SUCCESS, REGISTER_USER_FAILURE,
   LOGOUT_USER_REQUEST, LOGOUT_USER_SUCCESS, LOGOUT_USER_FAILURE,
+  AUTHENTICATE_USER_REQUEST, AUTHENTICATE_USER_SUCCESS, AUTHENTICATE_USER_FAILURE,
 } from '../_sagas/types'
 
 const initialState = {
@@ -14,7 +15,11 @@ const initialState = {
   logoutUserLoading: false,
   logoutUserDone: false,
   logoutUserError: null,
+  authenticateUserLoading: false,
+  authenticateUserDone: false,
+  authenticateUserError: null,
 
+  userAuthentication: null,
   currentUser: null,
 }
 
@@ -32,7 +37,8 @@ const user = (state = initialState, action) => {
         ...state,
         loginUserLoading: false,
         loginUserDone: true,
-        currentUser: action.payload
+        currentUser: action.payload,
+        logoutUserDone: false,
       }
     case LOGIN_USER_FAILURE:
       return {
@@ -45,6 +51,9 @@ const user = (state = initialState, action) => {
         registerUserLoading: true,
         registerUserDone: false,
         registerUserError: null,
+        currentUser: null,
+        loginUserDone: false,
+        logoutUserDone: false,
       }
     case REGISTER_USER_SUCCESS:
       return {
@@ -70,11 +79,32 @@ const user = (state = initialState, action) => {
         logoutUserLoading: false,
         logoutUserDone: true,
         currentUser: null,
+        userAuthentication: null,
+        loginUserDone: false,
       }
     case LOGOUT_USER_FAILURE:
       return {
         ...state,
         logoutUserError: action.error
+      }
+    case AUTHENTICATE_USER_REQUEST:
+      return {
+        ...state,
+        authenticateUserLoading: true,
+        authenticateUserDone: false,
+        authenticateUserError: null,
+      }
+    case AUTHENTICATE_USER_SUCCESS:
+      return {
+        ...state,
+        authenticateUserLoading: false,
+        authenticateUserDone: true,
+        userAuthentication: action.payload,
+      }
+    case AUTHENTICATE_USER_FAILURE:
+      return {
+        ...state,
+        authenticateUserError: action.error
       }
     default:
       return {

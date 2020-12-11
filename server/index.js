@@ -32,20 +32,25 @@ app.get('/', (req, res) => {
 })
 
 app.post('/api/user/register', (req, res) => {
-  const user = new User(req.body);
-
-  user.save((error, doc) => {
+  User.findOne({ email: req.body.email }, (error, user) => {
     if (error) return res.status(400).json({ success: false, error })
-    return res.status(200).json({ success: true })
+    if (user) {
+      return res.status(401).send('이미 존재하는 사용자입니다.');
+    } else {
+      const user = new User(req.body);
+      user.save((error, doc) => {
+        if (error) return res.status(400).json({ success: false, error })
+        return res.status(200).json({ success: true })
+      })
+    }
   })
 })
 
 app.post('/api/user/login', (req, res) => {
 
   User.findOne({ email: req.body.email }, (error, user) => {
-    if (error) return res.status(400).json({ success: false, error })
-    if (!user) {
-      return res.status(400).send('존재하지 않는 사용자입니다.');
+    if (error) {
+      return res.status(401).send('존재하지 않는 사용자입니다.');
     }
 
     user.comparePassword(req.body.password, (error, isMatch) => {
@@ -92,7 +97,8 @@ app.get('/api/user/logout', auth, (req, res) => {
     { token: '' },
     (error, user) => {
       if (error) return res.status(400).json({ success: false, error })
-      res.status(200).json({ success: true })
+      res.cookie('x_auth', '').status(200)
+        .json({ success: true });
     })
 })
 

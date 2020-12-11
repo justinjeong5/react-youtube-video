@@ -5,6 +5,9 @@ const auth = (req, res, next) => {
 
   // 클라이언트 쿠키에서 token 가져오기
   let token = req.cookies.x_auth;
+  if (!token) {
+    return res.json({ isAuth: false })
+  }
 
   // token 복호화하여 user를 검증
   User.findByToken(token, (err, user) => {

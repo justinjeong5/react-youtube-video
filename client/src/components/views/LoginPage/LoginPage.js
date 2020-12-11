@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Form, Input, Button, Checkbox } from 'antd';
 import { LOGIN_USER_REQUEST } from '../../../_sagas/types';
@@ -11,11 +11,14 @@ const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
 
-
-function LoginPage() {
+function LoginPage(props) {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const { loginUserLoading } = useSelector(state => state.user)
+  const { loginUserLoading, loginUserDone } = useSelector(state => state.user)
+
+  useEffect(() => {
+    props.history.push('/')
+  }, [loginUserDone])
 
   const initialValues = () => {
     return {

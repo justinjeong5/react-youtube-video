@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-
+const cors = require('cors')
 const port = 5000;
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -11,6 +11,10 @@ const { auth } = require('./middleware/auth')
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(cors({
+  origin: true,
+  credentials: true,  // cookie 전달하는 설정
+}));
 
 const mongoose = require('mongoose');
 mongoose.connect(config.mongoURI, {
@@ -23,7 +27,7 @@ mongoose.connect(config.mongoURI, {
 
 
 
-app.get('/api', (req, res) => {
+app.get('/', (req, res) => {
   res.status(200).send('connected server-side app')
 })
 

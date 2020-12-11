@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Form, Input, Button, Checkbox } from 'antd';
+import { MailOutlined, LockOutlined } from '@ant-design/icons';
 import { LOGIN_USER_REQUEST } from '../../../_sagas/types';
+import { Link } from 'react-router-dom';
 
 const layout = {
   labelCol: { span: 8 },
@@ -48,7 +50,9 @@ function LoginPage(props) {
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100vh' }}>
       <Form
         {...layout}
-        name="basic"
+        name="normal_login"
+        className="login-form"
+
         style={{ width: '400px' }}
         initialValues={initialValues()}
         onFinish={onFinish}
@@ -60,7 +64,7 @@ function LoginPage(props) {
           rules={[{ required: true, message: '이메일을 입력해주세요.' },
           { type: "email", message: '이메일의 형식이 올바르지 않습니다.' }]}
         >
-          <Input />
+          <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="email" />
         </Form.Item>
 
         <Form.Item
@@ -71,7 +75,7 @@ function LoginPage(props) {
           { whitespace: false, message: '비밀번호의 형식이 올바르지 않습니다.' },
           { min: 6, message: '비밀번호는 6글자보다 길어야합니다.' }]}
         >
-          <Input.Password />
+          <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} placeholder="password" />
         </Form.Item>
 
         <Form.Item {...tailLayout} name="remember" valuePropName="checked">
@@ -79,14 +83,15 @@ function LoginPage(props) {
         </Form.Item>
 
         <Form.Item {...tailLayout}>
-          <Button type="primary" htmlType="submit" >
+          <Button type="primary" htmlType="submit" className="login-form-button" style={{ width: '100%' }}>
             로그인
           </Button>
+          <Link to='/register'>아직 회원이 아니시라면</Link>
         </Form.Item>
         {loginUserLoading && '로그인중'}
 
       </Form>
-    </div>
+    </div >
   )
 }
 

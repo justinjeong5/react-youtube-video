@@ -2,9 +2,9 @@ import React from 'react';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from 'react-router-dom'
+import wrapper from './store/configureStore';
 
 import LandingPage from './components/views/LandingPage/LandingPage'
 import RegisterPage from './components/views/RegisterPage/RegisterPage'
@@ -24,4 +24,4 @@ function App() {
   );
 }
 
-export default App;
+export default wrapper.withRedux(App);

@@ -1,6 +1,7 @@
 import {
   LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE,
   REGISTER_USER_REQUEST, REGISTER_USER_SUCCESS, REGISTER_USER_FAILURE,
+  LOGOUT_USER_REQUEST, LOGOUT_USER_SUCCESS, LOGOUT_USER_FAILURE,
 } from '../_sagas/types'
 
 const initialState = {
@@ -10,7 +11,11 @@ const initialState = {
   registerUserLoading: false,
   registerUserDone: false,
   registerUserError: null,
-  loginUser: null,
+  logoutUserLoading: false,
+  logoutUserDone: false,
+  logoutUserError: null,
+
+  currentUser: null,
 }
 
 const user = (state = initialState, action) => {
@@ -27,7 +32,7 @@ const user = (state = initialState, action) => {
         ...state,
         loginUserLoading: false,
         loginUserDone: true,
-        loginUser: action.payload
+        currentUser: action.payload
       }
     case LOGIN_USER_FAILURE:
       return {
@@ -51,6 +56,25 @@ const user = (state = initialState, action) => {
       return {
         ...state,
         registerUserError: action.error
+      }
+    case LOGOUT_USER_REQUEST:
+      return {
+        ...state,
+        logoutUserLoading: true,
+        logoutUserDone: false,
+        logoutUserError: null,
+      }
+    case LOGOUT_USER_SUCCESS:
+      return {
+        ...state,
+        logoutUserLoading: false,
+        logoutUserDone: true,
+        currentUser: null,
+      }
+    case LOGOUT_USER_FAILURE:
+      return {
+        ...state,
+        logoutUserError: action.error
       }
     default:
       return {

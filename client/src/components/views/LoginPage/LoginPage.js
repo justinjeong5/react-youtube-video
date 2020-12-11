@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { withRouter } from 'react-router-dom';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { MailOutlined, LockOutlined } from '@ant-design/icons';
 import { LOGIN_USER_REQUEST } from '../../../_sagas/types';
@@ -95,4 +96,4 @@ function LoginPage(props) {
   )
 }
 
-export default LoginPage
+export default withRouter(LoginPage);

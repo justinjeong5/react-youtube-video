@@ -1,5 +1,7 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Form, Input, Button, Checkbox } from 'antd';
+import { LOGIN_USER_REQUEST } from '../../../_sagas/types';
 
 const layout = {
   labelCol: { span: 8 },
@@ -12,6 +14,8 @@ const tailLayout = {
 
 function LoginPage() {
   const [form] = Form.useForm();
+  const dispatch = useDispatch();
+  const { loginUserLoading } = useSelector(state => state.user)
 
   const initialValues = () => {
     return {
@@ -22,12 +26,16 @@ function LoginPage() {
 
   const onFinish = (values) => {
     localStorage.setItem('rememberMe', values.email);
-
-
+    dispatch({
+      type: LOGIN_USER_REQUEST,
+      payload: {
+        email: values.email,
+        password: values.password
+      }
+    })
   };
 
   const onFinishFailed = ({ errorFields }) => {
-    // console.log(errorFields);
     form.scrollToField(errorFields[0].name);
   };
 
@@ -70,6 +78,8 @@ function LoginPage() {
             로그인
           </Button>
         </Form.Item>
+        {loginUserLoading && '로그인중'}
+
       </Form>
     </div>
   )

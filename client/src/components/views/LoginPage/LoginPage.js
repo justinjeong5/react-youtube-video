@@ -17,7 +17,9 @@ function LoginPage(props) {
   const { loginUserLoading, loginUserDone } = useSelector(state => state.user)
 
   useEffect(() => {
-    props.history.push('/')
+    if (loginUserDone) {
+      props.history.push('/')
+    }
   }, [loginUserDone])
 
   const initialValues = () => {

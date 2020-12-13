@@ -11,6 +11,7 @@ import RegisterPage from './components/views/RegisterPage/RegisterPage'
 import LoginPage from './components/views/LoginPage/LoginPage'
 import Auth from './hoc/auth'
 import LoadingPage from './components/views/LoadingPage/LodingPage';
+import Footer from './components/views/Footer/Footer'
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           </Switch>
         </Router>
       </div>
+      <Footer />
     </Suspense>
   );
 }

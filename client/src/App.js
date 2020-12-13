@@ -10,13 +10,15 @@ import LandingPage from './components/views/LandingPage/LandingPage'
 import RegisterPage from './components/views/RegisterPage/RegisterPage'
 import LoginPage from './components/views/LoginPage/LoginPage'
 import Auth from './hoc/auth'
-import LoadingPage from './components/views/LoadingPage/LodingPage';
+import LoadingPage from './components/views/LoadingPage/LoadingPage';
+import NavBar from './components/views/NavBar/NavBar'
 import Footer from './components/views/Footer/Footer'
 
 function App() {
   return (
     <Suspense fallback={<LoadingPage />}>
-      <div className="App">
+      <NavBar />
+      <div style={{ paddingTop: '49px', minHeight: 'calc(100vh - 80px)' }} >
         <Router>
           <Switch>
             <Route exact path="/" component={Auth(LandingPage, null)} />

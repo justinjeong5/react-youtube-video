@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { withRouter } from 'react-router-dom';
-import { LOGOUT_USER_REQUEST } from '../../../_sagas/types';
+
+import { CodeSandboxOutlined } from '@ant-design/icons'
 
 function LandingPage(props) {
-  const dispatch = useDispatch();
-  const { logoutUserDone, userAuthentication } = useSelector(state => state.user)
+  const { logoutUserDone } = useSelector(state => state.user)
 
   useEffect(() => {
     if (logoutUserDone) {
@@ -13,15 +13,12 @@ function LandingPage(props) {
     }
   }, [logoutUserDone])
 
-  const handleLogout = () => {
-    dispatch({ type: LOGOUT_USER_REQUEST })
-  }
-
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100vh' }}>
-      <h2>시작 페이지</h2>
-      {userAuthentication && userAuthentication.isAuth && <button onClick={handleLogout}>로그아웃</button>}
-    </div>
+    <>
+      <div className="app">
+        <CodeSandboxOutlined style={{ display: 'flex', fontSize: '2rem', justifyContent: 'center' }} /><br />
+      </div>
+    </>
   )
 }
 

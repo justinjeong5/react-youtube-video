@@ -17,17 +17,17 @@ import Footer from './components/views/Footer/Footer'
 function App() {
   return (
     <Suspense fallback={<LoadingPage />}>
-      <NavBar />
-      <div style={{ paddingTop: '49px', minHeight: 'calc(100vh - 80px)' }} >
-        <Router>
+      <Router>
+        <NavBar />
+        <div style={{ paddingTop: '49px', minHeight: 'calc(100vh - 80px)' }} >
           <Switch>
             <Route exact path="/" component={Auth(LandingPage, null)} />
             <Route exact path="/register" component={Auth(RegisterPage, false)} />
             <Route exact path="/login" component={Auth(LoginPage, false)} />
           </Switch>
-        </Router>
-      </div>
-      <Footer />
+        </div>
+        <Footer />
+      </Router>
     </Suspense>
   );
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Menu } from 'antd';
 import { Link, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
@@ -6,8 +6,14 @@ import { LOGOUT_USER_REQUEST } from '../../../../_sagas/types';
 import { LoginOutlined, LogoutOutlined, UserAddOutlined } from '@ant-design/icons'
 
 function RightMenu(props) {
-  const { userAuthentication } = useSelector(state => state.user)
+  const { currentUser, logoutUserDone } = useSelector(state => state.user)
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (logoutUserDone) {
+      props.history.push('/');
+    }
+  }, [logoutUserDone])
 
   const logoutHandler = () => {
     dispatch({
@@ -15,7 +21,15 @@ function RightMenu(props) {
     })
   };
 
-  if (userAuthentication && !userAuthentication.isAuth) {
+  if (currentUser && currentUser.isAuth) {
+    return (
+      <Menu mode={props.mode}>
+        <Menu.Item key="logout">
+          <span onClick={logoutHandler}><LogoutOutlined /></span>
+        </Menu.Item>
+      </Menu>
+    )
+  } else {
     return (
       <Menu mode={props.mode}>
         <Menu.Item key="mail">
@@ -23,14 +37,6 @@ function RightMenu(props) {
         </Menu.Item>
         <Menu.Item key="app">
           <Link to="/register"><UserAddOutlined /></Link>
-        </Menu.Item>
-      </Menu>
-    )
-  } else {
-    return (
-      <Menu mode={props.mode}>
-        <Menu.Item key="logout">
-          <span onClick={logoutHandler}><LogoutOutlined /></span>
         </Menu.Item>
       </Menu>
     )

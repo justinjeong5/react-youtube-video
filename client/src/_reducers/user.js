@@ -54,6 +54,7 @@ const user = (state = initialState, action) => {
         currentUser: null,
         loginUserDone: false,
         logoutUserDone: false,
+        loginUserError: null,
       }
     case REGISTER_USER_SUCCESS:
       return {

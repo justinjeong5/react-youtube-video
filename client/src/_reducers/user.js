@@ -19,7 +19,6 @@ const initialState = {
   authenticateUserDone: false,
   authenticateUserError: null,
 
-  userAuthentication: null,
   currentUser: null,
 }
 
@@ -43,6 +42,7 @@ const user = (state = initialState, action) => {
     case LOGIN_USER_FAILURE:
       return {
         ...state,
+        loginUserLoading: false,
         loginUserError: action.error
       }
     case REGISTER_USER_REQUEST:
@@ -80,7 +80,6 @@ const user = (state = initialState, action) => {
         logoutUserLoading: false,
         logoutUserDone: true,
         currentUser: null,
-        userAuthentication: null,
         loginUserDone: false,
       }
     case LOGOUT_USER_FAILURE:
@@ -100,7 +99,7 @@ const user = (state = initialState, action) => {
         ...state,
         authenticateUserLoading: false,
         authenticateUserDone: true,
-        userAuthentication: action.payload,
+        currentUser: action.payload,
       }
     case AUTHENTICATE_USER_FAILURE:
       return {

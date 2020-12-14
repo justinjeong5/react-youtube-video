@@ -20,7 +20,7 @@ function NavBar() {
   return (
     <nav className="menu" style={{ position: 'fixed', zIndex: 5, width: '100%' }}>
       <div className="menu__logo">
-        <Link className='menu__link'> <CodeSandboxOutlined /> </Link>
+        <Link className='menu__link' to='/'> <CodeSandboxOutlined /> </Link>
       </div>
       <div className="menu__container">
         <div className="menu_left">

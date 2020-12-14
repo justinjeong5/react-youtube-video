@@ -49,10 +49,12 @@ app.post('/api/user/register', (req, res) => {
 app.post('/api/user/login', (req, res) => {
 
   User.findOne({ email: req.body.email }, (error, user) => {
-    if (error) {
+    if (!user) {
       return res.status(401).send('존재하지 않는 사용자입니다.');
     }
-
+    if (error) {
+      return res.status(401).send('데이터베이스 에러가 발생했습니다.');
+    }
     user.comparePassword(req.body.password, (error, isMatch) => {
       if (error) return res.status(400).json({ success: false, error })
       if (!isMatch) {

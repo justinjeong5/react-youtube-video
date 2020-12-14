@@ -10,7 +10,7 @@ export default function (SpecificComponent, option, adminRoute = null) {
 
   function AuthenticationCheck(props) {
 
-    const { userAuthentication } = useSelector(state => state.user)
+    const { currentUser } = useSelector(state => state.user)
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -20,14 +20,15 @@ export default function (SpecificComponent, option, adminRoute = null) {
     }, [])
 
     useEffect(() => {
-      if (userAuthentication) {
-        if (userAuthentication.isAuth) {
+      if (currentUser) {
+        if (option === null) return;
+        if (currentUser.isAuth) {
           // 로그인이 된 사용자
           if (!option) {
             // 로그인이 된 사용자 && 로그인을 안한 사용자만 사용하는 페이지
             props.history.push('/')
           }
-          if (!userAuthentication.isAdmin) {
+          if (!currentUser.isAdmin) {
             // 어드민이 아닌 사용자
             if (adminRoute) {
               // 어드민이 아닌 사용자 && 어드민 권한이 필요한 페이지
@@ -42,7 +43,7 @@ export default function (SpecificComponent, option, adminRoute = null) {
           }
         }
       }
-    }, [userAuthentication])
+    }, [currentUser])
 
     return (
       <SpecificComponent />
